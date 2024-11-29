@@ -32,6 +32,13 @@ export class MarvelService {
     return this.http.get<any[]>(`${this.marvelBaseUrl}comics?limit=${limit}&ts=${ts}&apikey=${this.apiPublicKey}&hash=${hash}`);
   }
 
+  getSpecificCharacter(name: string) : Observable<any> {
+    const ts = new Date().getTime().toString();
+    const hash = this.generateHash(ts);
+
+    return this.http.get<any[]>(`${this.marvelBaseUrl}characters?name=${name}&ts=${ts}&apikey=${this.apiPublicKey}&hash=${hash}`);
+  }
+
   constructor(private http: HttpClient) { }
 }
 

@@ -1,5 +1,45 @@
 <h1 class="heading">Marvel Characters</h1>
+
+<!-- Search Bar -->
+<form #userForm="ngForm" (ngSubmit)="onSubmitForm(userForm)" class="search-bar">
+  <input
+    type="text"
+    name="name"
+    id="name"
+    class="search-input"
+    placeholder="Search for a character..."
+    [(ngModel)]="characterName"
+    required
+  >
+  <button type="submit" class="search-button">Search</button>
+</form>
+
 <div class="characters-container">
+  <!-- Searched Character Card -->
+  <div
+    *ngIf="character"
+    class="character-card searched-character-card"
+    [@fadeIn]>
+    <img
+      class="character-image"
+      [src]="character.thumbnail.path + '.' + character.thumbnail.extension"
+      [alt]="character.name"
+    >
+    <div class="character-details">
+      <h3 class="character-name">{{ character.name }}</h3>
+      <p class="character-description">
+        {{ character.description || 'No description available.' }}
+      </p>
+      <p class="character-comics-title">Comics:</p>
+      <ul class="comics-list">
+        <li *ngFor="let comic of character.comics.items" class="comic-item">
+          {{ comic.name }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- All Characters -->
   <div *ngFor="let character of characters" class="character-card">
     <img
       class="character-image"
@@ -8,7 +48,9 @@
     >
     <div class="character-details">
       <h3 class="character-name">{{ character.name }}</h3>
-      <p class="character-description">{{ character.description || 'No description available.' }}</p>
+      <p class="character-description">
+        {{ character.description || 'No description available.' }}
+      </p>
       <p class="character-comics-title">Comics:</p>
       <ul class="comics-list">
         <li *ngFor="let comic of character.comics" class="comic-item">
